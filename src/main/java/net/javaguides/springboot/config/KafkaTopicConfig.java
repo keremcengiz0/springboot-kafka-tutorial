@@ -1,6 +1,7 @@
 package net.javaguides.springboot.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
@@ -8,13 +9,24 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfig {
 
+    @Value("${spring.kafka.topic.name}")
+    private String topicName;
+
+    @Value("${spring.kafka.topic-json.name}")
+    private String topicJson;
+
     @Bean
     public NewTopic javaguidesTopic() {
-        return TopicBuilder.name("javaguides").build();
+        return TopicBuilder.name(topicName).build();
     }
 
     @Bean
     public NewTopic javaguidesJsonTopic() {
-        return TopicBuilder.name("javaguides_json").build();
+        return TopicBuilder.name(topicJson).build();
     }
+
+
+    // .\bin\windows\kafka-server-start.bat .\config\server.properties
+
+    // .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
 }
